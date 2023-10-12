@@ -242,5 +242,12 @@ a.komentar_link:hover{
     color: #f58d17;
 
 }
-.card{
+.promeni-sliku-link{
+    display: none;
+}
+.slika-admin-meni:hover + .promeni-sliku-link{
+    display: block;
+}
+.promeni-sliku-link:hover{
+    display: block;
 }

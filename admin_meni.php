@@ -3,6 +3,67 @@ session_start();
 
 require_once "connection.php";
 require_once "header.php";
+if ( !isset( $_SESSION['id'])){
+    header ( "Location: index.php");
+}
+$fajlErr = "";
+if ( $_SERVER["REQUEST_METHOD"] == "POST" ){
+    // $fajl = $conn-> real_escape_string( $_POST["fotografija_artikla"]);
+
+    $updatedAt = date("Y-m-d H:i:s");
+    $artiklId = $conn-> real_escape_string( $_POST["artikl_id"]);
+    if ( $_FILES['fotografija_artikla']['size'] !== 0 ){
+            $file = $_FILES['fotografija_artikla'];
+    
+            var_dump($file);
+            $fileName = $_FILES['fotografija_artikla']['name'];
+            $fileTmpName = $_FILES['fotografija_artikla']['tmp_name'];//privremena lokacija filea
+            $fileSize= $_FILES['fotografija_artikla']['size'];
+            $fajlErr = $_FILES['fotografija_artikla']['error'];
+            $fileType = $_FILES['fotografija_artikla']['type'];
+        
+            $fileExt = explode( '.', $fileName );
+            $fileActualExt = strtolower(end($fileExt));
+        
+            $allowed = array ('jpg','jpeg','png');
+        
+            if ( in_array ( $fileActualExt, $allowed )){
+                if ( $fajlErr === 0 ){
+                    if( $fileSize < 1000000 ){
+                        $fileNameNew = $fileName;
+                        $fileDestination = 'uploads/'.$fileNameNew;
+                        move_uploaded_file($fileTmpName, $fileDestination);
+                    }else{
+                        $fajlErr = "Prevelik file";
+                    }
+                }else{
+                    $fajlErr = "Greska pri uploudovanju fotografije ";
+                }
+            }else{
+                $fajlErr = "jpg jpeg png fajlovi dozvoljeni";
+            }
+        
+        }else{
+            $fajlErr = "Morate izabrati fotografiju!";
+        }
+        if ($fajlErr == 0){
+            $upit = "UPDATE `products` SET 
+                `image` = '".$fileDestination."',
+                `updated_at` = '".$updatedAt."'
+                WHERE `id` = $artiklId
+            ";
+            if ( $conn -> query($upit)){
+                $successMsg = "Uspešno izmenjeno";
+                header ( "Location: admin_meni.php");
+            }else{
+                $errMessage = "Greska prilikom izmene artikla " .$conn->error;
+                }
+            }
+    }
+    
+    
+
+
 
 ?>
 <!DOCTYPE html>
@@ -19,41 +80,41 @@ require_once "header.php";
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-xxl">
-            <a class="navbar-brand" href="index.php">
-                <span class="fw-bold text-secondary">
-                    Giros kod Taličnog Tome
-                </span> 
-            </a>
-            
+            <h3 class="fw-bold text-secondary">
+                Dobrodošao admine
+            </h3> 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto just">
                     <li class="nav-item active">
-                        <a class="nav-link fw-bold" href="meni.php">Meni </a>
+                        <a class="nav-link fw-bold" href="index.php">Naslovna </a>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link fw-bold" href="index.php#akcije">Akcije </a>
                     </li>
-                    <li class="nav-item active">
-                        <a class="nav-link fw-bold" href="knjiga_utisaka.php">Knjiga utisaka </a>
-                    </li>
-                    <?php
-                    if ( isset($_SESSION['id'])){
-                        ?>
+                
                     <li class="nav-item active">
                         <a class="nav-link fw-bold" href="dodaj_artikl.php">Dodaj artikl</a>
                     </li>
-                    
-                        <?php
-                    }
-
-                    ?>
+                    <!-- <li class="nav-item active nav-dropdown ">
+                            <a class="nav-link fw-bold nav-dropdown" href="">Izmeni artikl</a>
+                            <div class="div-dropdown">
+                                <ul class="text-decoration-none">
+                                    <li><a href="admin_meni.php?kategorija=giros&naslov=Giros">Giros</a></li>
+                                    <li><a href="admin_meni.php?kategorija=sendvic&naslov=Senviči">Sendviči</a></li>
+                                    <li><a href="admin_meni.php?kategorija=salata&naslov=Salate">Salate</a></li>
+                                    <li><a href="admin_meni.php?kategorija=desert&naslov=Desert">Desert</a></li>
+                                    <li><a href="admin_meni.php?kategorija=akcija&naslov=Kombo&akcija">Kombo akcija</a></li>
+                                    <li><a href="admin_meni.php?kategorija=pice&naslov=Piće">Piće</a></li>
+                                    <li><a href="admin_meni.php?kategorija=drugo&naslov=Drugo">Drugo</a></li>
+                                </ul>
+                            </div>        
+                    </li> -->
                 </ul>
             </div>
         </div>
-    
     </nav>
     <?php
 
@@ -61,66 +122,65 @@ require_once "header.php";
     $naslovi = ["Girosi","Sendviči","Salate","Deserti","Kombo akcija","Pice","Drugo"];
     ?>
 
-    <section class="bg-light" id="meni">
-        <div class="container-fluid">
-            <div class="row my-2 justify-content-center">
-                <div class="col-12 intro-text my-3">
-                    <h1 class="my-3">Pogledaj naš meni</h1>
-                    
-                    <p class="fw-bold">Giros  Sendviči  Salate  Palačinke</p>
-                </div>
+    <div class="container-large p-4 bg-light">
+        <div class="row text-center">
+            <div class="col-12">
+                <h6>Na ovoj stranici možeš dodavati i menjati artikle. Menjanje slike artikla vrši se klikom na sliku ako si u mobilmom režimu, te odabirom novog fajla i klikom na dugme izmeni.</h6>
+                <h6>Ako si za računarom dovoljno je da predješ mišem preko slike i forma za izmenu fotografije će se automatki prikazati.</h6>
             </div>
         </div>
-    </section>
-    <section class="bg-light py-3">
-        <div class="container-fluid ">
-                <div class="row justify-content-center ">
+    </div>
+    <section class="bg-white" id="meni">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-12 intro-text">
+                    <h1 class="">Meni</h1>
+                <div class="row m-2">
                     <?php
-                    for ( $i = 0 ; $i < count( $kategorije ); $i++ ){
+                    for( $i = 0; $i < count( $kategorije ); $i++ ){
+                       echo "<h3 class='my-3 text-dark'> ".$naslovi[$i]."</h3>";
                         $sql = "SELECT * FROM `products` WHERE `category` = '".$kategorije[$i]."'";
-                        $res = $conn->query($sql);
-                        ?>
-                        <div class="text-center my-3 text-secondary">
-                            <h3 class=""><?php echo $naslovi[$i] ?></h3>
-                        </div>
-                        <?php
-                        if ( $res -> num_rows > 0){
+                        $res = $conn -> query( $sql );
+                        if ($res -> num_rows > 0){
                             while ( $row = $res -> fetch_assoc()){
-                                ?>
-                                <div class="card col-md-3 m-1 ">
-                                    <img class="card-img-top p-3" src="<?php echo $row['image'] ?>" alt="Card image cap">
-                                    <div class="card-body">
-                                        <h5 class="card-title fw-bold"><?php echo $row['title']  ?></h5>
-                                        <p class="card-text">Cena <?php  echo $row['price'] ?> RSD</p>
-                                        <p class="card-text"><?php  echo $row['description'] ?></p>
-                                        <?php if ( $row['action'] == 1 ){
-                                        ?>
-                                        <a href="index.php#akcija" class="kombo_link">Vidi akciju sa ovim artiklom</a>
-                                        <?php
-                                        }
-                                        if ( isset( $_SESSION['id'])){
-                                            ?>
-                                            <a href="izmeni_artikl.php?id=<?php echo $row['id']?>" class="kombo_link">Izmeni artikal</a>
-                                            <a href="izbrisi_artikl.php?id=<?php echo $row['id']?>" class="kombo_link">Izbriši artikal</a>
-                                            <?php
-
-                                        }
-                                        ?>
+                    ?>
+                    <div class="card col-lg-2 col-sm-5 m-md-2 m-sm-2 p-0 border-0 bg-light">
+                        <div class="m-0 w-100 slika-admin-meni">
+                            <img class="card-img-top " src="<?php echo $row['image'] ?>" alt="Card image cap">
+                        </div>
+                        <div class="promeni-sliku-link">
+                            <form method="Post" action="admin_meni.php" enctype= "multipart/form-data" class="mt-2">
+                                <div class="form-group">
+                                    <input type="hidden" name="artikl_id" value="<?php echo $row['id']; ?>">
+                                    <div class="text-danger">
+                                    <?php if ( $fajlErr !== 0 ) {echo $fajlErr ;}?>
                                     </div>
+                                    <label for="exampleFormControlFile1" class="fw-bold">Izmeni fotografiju</label>
+                                    <input type="file" class="form-control-file m-2"  name="fotografija_artikla" >   
                                 </div>
-                                <?php
+                                <button type="submit" class="btn btn-primary">Izmeni</button>
+                            </form>
+                        </div>
+                        <div class="card-body ">
+                            <h5 class="card-title fw-bold my-2"><?php echo $row['title']  ?></h5>
+                            <p class="card-text fw-bold">Cena <?php  echo $row['price'] ?> RSD</p>
+                            <p class="card-text "><?php  echo $row['description'] ?></p>
+                            <?php if ( $row['action'] == 1 ){ ?>
+                            <a href="index.php#akcija" class="kombo_link m-1">Vidi kombo ponudu</a>
+                            <?php }; ?>
+                            <a href="izmeni_artikl.php?id=<?php echo $row['id']?>" class="btn btn-success m-1">Izmeni artikal</a>
+                            <a href="izbrisi_artikl.php?id=<?php echo $row['id']?>" class="btn btn-danger m-1">Izbriši artikal</a>
+                        </div>
+                    </div>
+                    <?php
                             }
                         }
                     }
-                        
-                        
-                        ?>
-                        <!--   -->
-                        <?php
-                            
-                
-                        ?>
-                    </div>
+                    ?>
+                </div>
+                    
+                    
+                </div>
             </div>
         </div>
     </section>

@@ -193,14 +193,19 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ){
                                     <?php echo $cenaErr ?>
                                 </div>
                             </div>
-                            <!-- <div class="form-group">
+                            <?php
+                            if ( isset( $_GET['action']) && $_GET['action'] == 'izmeni_sliku'){
+                            ?>
+                            <div class="form-group">
                                 <div class="text-danger">
                                     <?php if ( $fajlErr !== 0 ) {echo $fajlErr ;}?>
                                 </div>
                                 <label for="exampleFormControlFile1">Fotografija</label>
-                                <input type="file" class="form-control-file my-3" id="fotografija_artikla" name="fotografija_artikla" >
-                                
-                            </div> -->
+                                <input type="file" class="form-control-file my-3" id="fotografija_artikla" name="fotografija_artikla" >   
+                            </div>
+                            <?php
+                            }
+                            ?>
                             <div class="form-group">
                                 <label for="opis_artikla">Unesite opis artikla</label>
                                 <textarea class="form-control my-3" rows="5" id="opis_artikla" name="opis_artikla" ><?php echo $opis ;?></textarea>
@@ -237,6 +242,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ){
                             </div>
                             <div class="form-group my-2">
                                 <button type="submit" class="btn btn-primary">Izmeni artikal</button>
+                                <button type="reset" class="btn btn-danger"><a href="admin_meni.php" class="text-decoration-none text-white">Nazad</a></button>
                             </div>
                         </form>
                     </div>
