@@ -132,35 +132,52 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST"){
 
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg bg-white shadow py-3 sticky-top">
-        <div class="container">
-        <a class="navbar-brand" href="index.php">
-            <!-- <img src="uploads/viber_slika_2023-09-11_19-45-13-507.png" alt="logo"> -->
-            <h1 class="text-secondary fw-bold">Giros kod Taličnog Tome</h1>
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mx-auto">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="index.php">Naslovna strana</a>
-                </li>
-                <li class="nav-item">
-                    <a href="admin_meni.php" class="display-block nav-link">
-                    Meni
-                    </a>                    
-                </li>
-                <li class="nav-item">
-                    <a href="dodaj_artikl.php" class="display-block nav-link">
-                    Dodaj artikl
-                    </a>                    
-                </li>
-            </ul>
-        </div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-xxl">
+            <h3 class="fw-bold text-secondary">
+                Dobrodošao admine
+            </h3> 
+            <?php
+
+
+            ?>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto just">
+                    <li class="nav-item active">
+                        <a class="nav-link fw-bold" href="index.php">Naslovna </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link fw-bold" href="index.php#akcije">Akcije </a>
+                    </li>
+                
+                    <li class="nav-item active">
+                        <a class="nav-link fw-bold" href="dodaj_artikl.php">Dodaj artikl</a>
+                    </li>
+                    <li class="nav-item active nav-dropdown ">
+                        <a class="nav-link fw-bold nav-dropdown" href="">Izmeni artikl</a>
+                        <div class="div-dropdown list">
+                            <a class="d-block" href="admin_meni.php?kategorija=Sve">Svi artikli</a>
+                            <a class="d-block" href="admin_meni.php?kategorija=giros&naslov=Giros">Giros</a>
+                            <a class="d-block" href="admin_meni.php?kategorija=sendvic&naslov=Senviči">Sendviči</a>
+                            <a class="d-block" href="admin_meni.php?kategorija=salata&naslov=Salate">Salate</a>
+                            <a class="d-block" href="admin_meni.php?kategorija=desert&naslov=Desert">Desert</a>
+                            <a class="d-block" href="admin_meni.php?kategorija=akcija&naslov=Kombo&akcija">Kombo akcija</a>
+                            <a class="d-block" href="admin_meni.php?kategorija=pice&naslov=Piće">Piće</a>
+                            <a class="d-block" href="admin_meni.php?kategorija=drugo&naslov=Drugo">Drugo</a>   
+                        </div>        
+                    </li>
+                    <li class="nav-item active">
+                        <a  class="nav-link fw-bold" href="logout.php">Izloguj se</a>
+                    </li> 
+                </ul>
+            </div>
         </div>
     </nav>
-        <div class="container mt-5">
+    <div class="container mt-5">
         <div class="row justify-content-center ">
             <div class="col-md-6 ">
                 <div class="card">
@@ -243,6 +260,8 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST"){
 
                                 <button type="submit" class="btn btn-primary">Dodaj artikal</button>
                                 <button type="reset" class="btn btn-danger">Reset</button>
+                                <a href="admin_meni.php" class="btn btn-secondary">Nazad</a>
+
                             </div>
                         </form>
                     </div>
@@ -250,10 +269,7 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST"){
             </div>
         </div>
     </div>
-    <?php
-
-
-?>
+    
  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>    

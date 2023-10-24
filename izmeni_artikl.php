@@ -3,7 +3,7 @@ session_start();
 require_once "connection.php";
 require_once "validation.php";
 
-if ( !isset ( $_SESSION['id']) ){
+if ( !isset ( $_SESSION['id']) && !isset($_COOKIE['user'])){
     header ( "Location: index.php ");
 }
 
@@ -26,8 +26,6 @@ if ( $_SERVER["REQUEST_METHOD"] == "GET" && isset ( $_GET['id'])){
             $preporuka = $row['best_seler'];
         }
     }
-}else{
-    header( "Location: admin_meni.php");
 }
 if ( $_SERVER["REQUEST_METHOD"] == "POST" ){
     $naziv = $conn-> real_escape_string( $_POST["naziv_artikla"]);

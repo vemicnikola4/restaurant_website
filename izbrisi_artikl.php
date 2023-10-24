@@ -2,7 +2,7 @@
 session_start();
 require_once "connection.php";
 
-if ( !isset($_SESSION['id'])){
+if ( !isset($_SESSION['id']) && !isset($_COOKIE['user'])){
     Header("Location:index.php");
 }
 
@@ -59,7 +59,7 @@ if( $_SERVER['REQUEST_METHOD'] == "GET" ){
                                 <div class="form-group mt-2">
                                     <input type="hidden" name="artikl_id" value = "<?php echo $artiklId ?>">
                                     <button type="submit" class="btn btn-primary">Da</button>
-                                    <button class="btn btn-secundary"><a href="meni.php">Nazad</a></button>
+                                    <a href="admin_meni.php" class="btn btn-secondary">Nazad</a>
                                 </div>
                             </form>
                                        
