@@ -98,10 +98,6 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ){
             <h3 class="fw-bold text-secondary">
                 Dobrodošao admine
             </h3> 
-            <?php
-
-
-            ?>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -112,14 +108,14 @@ if ( $_SERVER["REQUEST_METHOD"] == "POST" ){
                         <a class="nav-link fw-bold" href="index.php">Naslovna </a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link fw-bold" href="index.php#akcije">Akcije </a>
+                        <a class="nav-link fw-bold" href="bookkeeping.php">Knjigovodjstvo </a>
                     </li>
                 
                     <li class="nav-item active">
                         <a class="nav-link fw-bold" href="dodaj_artikl.php">Dodaj artikl</a>
                     </li>
                     <li class="nav-item active nav-dropdown ">
-                        <a class="nav-link fw-bold nav-dropdown" href="">Izmeni artikl</a>
+                        <div class="nav-link fw-bold nav-dropdown" href="">Izmeni artikl</div>
                         <div class="div-dropdown list">
                             <a class="d-block" href="admin_meni.php?kategorija=Sve">Svi artikli</a>
                             <a class="d-block" href="admin_meni.php?kategorija=giros&naslov=Giros">Giros</a>

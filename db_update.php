@@ -23,6 +23,12 @@ $upiti[]=[
     'upit'=>"ALTER TABLE `coments` ADD `grade` INT NOT NULL",
     'opis'=> "dodavanje kolone grade u tabelu coments"
 ];
+$upiti[]=[
+    'id'=> 5,
+    'upit'=> "ALTER TABLE `earnings` ADD `ukupno` INT DEFAULT 0",
+    'opis'=> "Dodavanje kolone ukupno u tabelu earnings"
+];
+
 $sql = "SELECT `id` FROM `db_update`";
 
 

@@ -47,7 +47,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ){
                 $_SESSION['id'] = $row['id'];
                 $_SESSION['username'] = $row['username'];
                 if ( isset($_POST['kolacic'])  ){
-                    setcookie("user", "tomasef", time()+3600 , "/");
+                    setcookie("user", "tomasef", time()+60*60*24*30 , "/");
 
 
                 }

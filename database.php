@@ -39,6 +39,21 @@ $sql .= "CREATE TABLE IF NOT EXISTS `coments`
     PRIMARY KEY (`id`)
     )ENGINE=INnoDB;
     ";
+
+$sql .= "CREATE TABLE IF NOT EXISTS `earnings` 
+    (
+    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `k` INT DEFAULT 0,
+    `r` INT DEFAULT 0,
+    `c` INT DEFAULT 0,
+    `d` INT DEFAULT 0,
+    `date` DATE,
+    `created_at` DATE,
+    `updated_at` DATE,
+    PRIMARY KEY (`id`)
+    )ENGINE=InnoDB;
+"; 
+
 if($conn->multi_query($sql)){
     echo "<p>Tables created successfully</p>";
 }else{
